@@ -2,8 +2,7 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS build
 
 # copy api assemblies and files
-RUN mkdir /var/app
-RUN mkdir /var/app/logs
+RUN mkdir /var/app /var/app/logs /var/app/data
 COPY ./bin/release/netcoreapp3.1/publish /var/app
 # COPY appsettings.json /var/app/appsettings.json
 
