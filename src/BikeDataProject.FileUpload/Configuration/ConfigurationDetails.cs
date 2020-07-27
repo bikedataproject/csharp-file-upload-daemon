@@ -32,9 +32,9 @@ namespace BikeDataProject.FileUpload.Configuration
 
         public static ConfigurationDetails FromConfiguration(IConfiguration configuration)
         {
-            var filePath = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}FILE_PATH"]);
-            var extensions = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}FILE_EXTENSIONS"]);
-            var sizeLimit = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}FILE_SIZE_LIMIT"]);
+            var filePath = configuration[$"{Program.EnvVarPrefix}FILE_PATH"];
+            var extensions = configuration[$"{Program.EnvVarPrefix}FILE_EXTENSIONS"];
+            var sizeLimit = configuration[$"{Program.EnvVarPrefix}FILE_SIZE_LIMIT"];
             long size;
 
             if (string.IsNullOrWhiteSpace(filePath))

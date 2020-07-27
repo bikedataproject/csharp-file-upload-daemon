@@ -14,9 +14,9 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "BIKEDATA_FILE_PATH": "file_path.txt",
-        "BIKEDATA_FILE_EXTENSIONS": "file_extensions.txt",
-        "BIKEDATA_FILE_SIZE_LIMIT": "file_size_limit.txt"
+        "BIKEDATA_FILE_PATH": "C:\\Users\\riche\\Pictures\\osoc",
+        "BIKEDATA_FILE_EXTENSIONS": "GPX;FIT;",
+        "BIKEDATA_FILE_SIZE_LIMIT": "10485760"
       }
     }
   }
