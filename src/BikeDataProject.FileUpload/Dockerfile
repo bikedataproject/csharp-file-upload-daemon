@@ -19,4 +19,4 @@ EXPOSE 5000
 
 # Execute the project build
 WORKDIR /var/app/
-ENTRYPOINT ["dotnet", "BikeDataProject.Registrations.API.dll"]
+ENTRYPOINT ["dotnet", "BikeDataProject.FileUpload.dll"]
