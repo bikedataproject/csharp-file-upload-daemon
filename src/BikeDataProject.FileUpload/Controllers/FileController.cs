@@ -26,6 +26,9 @@ namespace BikeDataProject.FileUpload.Controllers
             this.ConfigurationDetails = configDetails;
         }
 
+        [HttpGet("/")]
+        public IActionResult Test() => this.Ok("{test: 'Hello World'}");
+
         /// <summary>
         /// Validates a file to check if it's has a good format
         /// </summary>
