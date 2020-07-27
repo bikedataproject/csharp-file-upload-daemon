@@ -11,6 +11,8 @@ namespace BikeDataProject.FileUpload
 {
     public class Program
     {
+        internal const string EnvVarPrefix = "BIKEDATA_";
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
