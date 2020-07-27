@@ -2,7 +2,8 @@ using BikeDataProject.FileUpload.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
-using System.Net.Mime;
+using System.IO;
+using System.Linq;
 
 namespace BikeDataProject.FileUpload.Controllers
 {
@@ -14,7 +15,7 @@ namespace BikeDataProject.FileUpload.Controllers
         /// <summary>
         /// Contains the details from the configuration.
         /// </summary>
-        private ConfigurationDetails ConfigurationDetails {get;set;}
+        private ConfigurationDetails ConfigurationDetails { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileController"> class.</see>
@@ -51,18 +52,51 @@ namespace BikeDataProject.FileUpload.Controllers
 
                 var file = Request.Form.Files[0];
 
+                // Checks if the file is empty
                 if (file.Length == 0)
                 {
                     Log.Error("File is empty");
                     return this.Problem("File is empty", statusCode: 400);
                 }
+
+                // Checks if the file is not too big
+                if (file.Length >= this.ConfigurationDetails.SizeLimit)
+                {
+                    Log.Error("File too big");
+                    return this.Problem("File too big", statusCode: 400);
+                }
+
+                // Checks if the file format is valid
+                var extension = file.FileName.Split(".").Last();
+                if (!this.ConfigurationDetails.Extensions.Contains(extension.ToUpper()))
+                {
+                    Log.Error("File extension is invalid");
+                    return this.Problem("File extension is invalid", statusCode: 400);
+                }
+
+                // Writes it to the said directory
+                var fullPath = Path.Combine(this.ConfigurationDetails.FilePath, $"{Guid.NewGuid()}.{extension}");
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    try
+                    {
+                        file.CopyTo(stream);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Fatal($"Error during the copy of the file: {ex.Message}");
+                        return this.Problem($"Problem happened when uploading the file: {ex.Message}", statusCode: 500);
+                    }
+                }
+
+                return this.Ok($"File uploaded");
+
             }
             catch (Exception e)
             {
+                Log.Fatal($"Unhandled exception: {e.Message}");
                 return this.Problem($"Unhandled exception: {e.Message}", statusCode: 500);
             }
-
-            return this.Problem("Unhandled situation", statusCode: 500);
         }
     }
 }

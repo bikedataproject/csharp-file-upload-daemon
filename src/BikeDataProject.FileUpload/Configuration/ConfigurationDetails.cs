@@ -16,14 +16,14 @@ namespace BikeDataProject.FileUpload.Configuration
 
         public List<string> Extensions { get; set; }
 
-        public int SizeLimit { get; set; }
+        public long SizeLimit { get; set; }
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationDetails"> class.</see>
         /// </summary>
         /// <param name="filePath">The file path to store the files that we receive.</param>
-        protected ConfigurationDetails(string filePath, List<string> extensions, int sizeLimit)
+        protected ConfigurationDetails(string filePath, List<string> extensions, long sizeLimit)
         {
             this.FilePath = filePath;
             this.Extensions = extensions;
@@ -35,7 +35,7 @@ namespace BikeDataProject.FileUpload.Configuration
             var filePath = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}FILE_PATH"]);
             var extensions = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}FILE_EXTENSIONS"]);
             var sizeLimit = File.ReadAllText(configuration[$"{Program.EnvVarPrefix}FILE_SIZE_LIMIT"]);
-            int size;
+            long size;
 
             if (string.IsNullOrWhiteSpace(filePath))
             {
@@ -54,7 +54,7 @@ namespace BikeDataProject.FileUpload.Configuration
                 Log.Fatal("Size Limit not set");
                 throw new Exception("Environmnent variable for the size limit is not set");
             }
-            else if (!int.TryParse(sizeLimit, out size))
+            else if (!long.TryParse(sizeLimit, out size))
             {
                 Log.Fatal("Size limit is not a number");
                 throw new Exception("Size limit is not a number");
@@ -62,6 +62,5 @@ namespace BikeDataProject.FileUpload.Configuration
 
             return new ConfigurationDetails(filePath, extensions.Split(";").ToList(), size);
         }
-
     }
 }
