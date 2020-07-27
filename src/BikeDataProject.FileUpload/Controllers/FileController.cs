@@ -30,7 +30,7 @@ namespace BikeDataProject.FileUpload.Controllers
         /// Validates a file to check if it's has a good format
         /// </summary>
         /// <returns>Status code that informs on the file validation.</returns>
-        [HttpPost("/File/Upload")]
+        [HttpPost("/Upload")]
         public IActionResult ValidateFile()
         {
             var request = Request;
