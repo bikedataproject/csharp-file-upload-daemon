@@ -1,5 +1,6 @@
 using BikeDataProject.FileUpload.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System;
 using System.Net.Mime;
 
@@ -31,11 +32,29 @@ namespace BikeDataProject.FileUpload.Controllers
         [HttpPost("/File/Upload")]
         public IActionResult ValidateFile()
         {
+            var request = Request;
             try
             {
+                // To receive file
+                if (Request.ContentType == null || !Request.ContentType.Contains("multipart/form-data"))
+                {
+                    Log.Error($"Content type is invalid: {Request.ContentType}");
+                    return this.Problem("Content-Type invalid", statusCode: 400);
+                }
+
+                // Checks if the request contains a file
                 if (Request.Form.Files == null || Request.Form.Files.Count == 0)
                 {
+                    Log.Error("File not found in the request");
                     return this.Problem("File not found", statusCode: 400);
+                }
+
+                var file = Request.Form.Files[0];
+
+                if (file.Length == 0)
+                {
+                    Log.Error("File is empty");
+                    return this.Problem("File is empty", statusCode: 400);
                 }
             }
             catch (Exception e)
