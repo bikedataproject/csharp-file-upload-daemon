@@ -93,7 +93,7 @@ namespace BikeDataProject.FileUpload.Controllers
                     }
                 }
 
-                return this.Ok($"File uploaded");
+                return this.Ok("{'status': 'OK', response: 'Files uploaded'}");
 
             }
             catch (Exception e)
