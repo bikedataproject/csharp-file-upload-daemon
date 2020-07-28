@@ -1,3 +1,97 @@
-# File Upload Daemon
+# file-upload-daemon
 
-This repository contains code to check validity of files before storing them locally
+<p align="center">
+  <a href="https://github.com/bikedataproject/csharp-file-upload-daemon">
+    <img src="https://avatars3.githubusercontent.com/u/64870976?s=200&v=4" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">File Upload</h3>
+
+  <p align="center">
+    This repository contains code to check validity of files before storing them locally.
+    <br />
+    <a href="https://github.com/bikedataproject/csharp-file-upload-daemon/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/bikedataproject/csharp-file-upload-daemon/issues">Request Feature</a>
+  </p>
+</p>
+
+## Table of Contents
+
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+* [Usage](#usage)
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
+* [License](#license)
+* [Contact](#contact)
+
+## About The Project
+
+![.NET Core](https://github.com/bikedataproject/csharp-file-upload-daemon/workflows/.NET%20Core/badge.svg)
+![Docker Image CI](https://github.com/bikedataproject/csharp-file-upload-daemon/workflows/Docker%20Image%20CI%20Build/badge.svg)
+![Docker Image CD](https://github.com/bikedataproject/csharp-file-upload-daemon/workflows/Docker%20Image%20Staging%20CD/badge.svg)
+
+### Built With
+
+* [C#](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/)
+* [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
+
+## Getting Started
+
+To get a local copy up and running follow these simple steps.
+
+### Prerequisites
+
+For this project to run you need .NET Core 3.1 installed on your computer [you can follow this link to download it (Windows, Linux, macOS](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+
+### Installation
+ 
+1. Clone the repo
+```sh
+git clone https://github.com/bikedataproject/csharp-file-upload-daemon.git
+```
+2. Restore the dependencies
+
+In the project folder (`./src/BikeDataProject.FileUpload/`), use the following command:
+```sh
+dotnet restore
+```
+3. Launch the project
+
+You can launch the project by typing the following command in the project folder (`./src/BikeDataProject.FileUpload/`): 
+```sh
+dotnet run
+```
+
+## Usage
+This service is used to check for GPX and FIT files before storing them locally.
+
+## Roadmap
+
+See the [open issues](https://github.com/bikedataproject/csharp-file-upload-daemon/issues) for a list of proposed features (and known issues).
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/MyFeature`)
+3. Commit your Changes (`git commit -m 'Add some great feature'`)
+4. Push to the Branch (`git push origin feature/MyFeature`)
+5. Open a Pull Request with the **develop** branch as its target.
+
+To know more about how to contribute to this project please refer to the `CONTRIBUTING.md` file.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+
+Bike Data Project - [@bikedataproject](https://twitter.com/bikedataproject) - dries@openknowledge.be / ben@openknowledge.be
+
+Project Link: [https://github.com/bikedataproject/csharp-file-upload-daemon](https://github.com/bikedataproject/csharp-file-upload-daemon)
