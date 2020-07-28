@@ -1,5 +1,6 @@
 using BikeDataProject.FileUpload.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.IO;
@@ -93,7 +94,7 @@ namespace BikeDataProject.FileUpload.Controllers
                     }
                 }
 
-                return this.Ok("{status: 'OK', response: 'Files uploaded'}");
+                return this.Ok(JsonConvert.SerializeObject(new { status = "OK", message = "Files uploaded"}));
 
             }
             catch (Exception e)
