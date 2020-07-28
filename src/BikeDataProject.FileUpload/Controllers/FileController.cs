@@ -53,42 +53,43 @@ namespace BikeDataProject.FileUpload.Controllers
                     return this.Problem("File not found", statusCode: 400);
                 }
 
-                var file = Request.Form.Files[0];
-
-                // Checks if the file is empty
-                if (file.Length == 0)
+                foreach (var file in Request.Form.Files)
                 {
-                    Log.Error("File is empty");
-                    return this.Problem("File is empty", statusCode: 400);
-                }
-
-                // Checks if the file is not too big
-                if (file.Length >= this.ConfigurationDetails.SizeLimit)
-                {
-                    Log.Error("File too big");
-                    return this.Problem("File too big", statusCode: 400);
-                }
-
-                // Checks if the file format is valid
-                var extension = file.FileName.Split(".").Last();
-                if (!this.ConfigurationDetails.Extensions.Contains(extension.ToUpper()))
-                {
-                    Log.Error("File extension is invalid");
-                    return this.Problem("File extension is invalid", statusCode: 400);
-                }
-
-                // Writes it to the said directory
-                var fullPath = Path.Combine(this.ConfigurationDetails.FilePath, $"{Guid.NewGuid()}.{extension}");
-                using (var stream = new FileStream(fullPath, FileMode.Create))
-                {
-                    try
+                    // Checks if the file is empty
+                    if (file.Length == 0)
                     {
-                        file.CopyTo(stream);
+                        Log.Error("File is empty");
+                        continue;
                     }
-                    catch (Exception ex)
+
+                    // Checks if the file is not too big
+                    if (file.Length >= this.ConfigurationDetails.SizeLimit)
                     {
-                        Log.Fatal($"Error during the copy of the file: {ex.Message}");
-                        return this.Problem($"Problem happened when uploading the file: {ex.Message}", statusCode: 500);
+                        Log.Error("File too big");
+                        continue;
+                    }
+
+                    // Checks if the file format is valid
+                    var extension = file.FileName.Split(".").Last();
+                    if (!this.ConfigurationDetails.Extensions.Contains(extension.ToUpper()))
+                    {
+                        Log.Error("File extension is invalid");
+                        continue;
+                    }
+
+                    // Writes it to the said directory
+                    var fullPath = Path.Combine(this.ConfigurationDetails.FilePath, $"{Guid.NewGuid()}.{extension}");
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        try
+                        {
+                            file.CopyTo(stream);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Fatal($"Error during the copy of the file: {ex.Message}");
+                            return this.Problem($"Problem happened when uploading the file: {ex.Message}", statusCode: 500);
+                        }
                     }
                 }
 
