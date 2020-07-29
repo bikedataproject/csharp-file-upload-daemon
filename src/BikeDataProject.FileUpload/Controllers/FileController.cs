@@ -37,7 +37,7 @@ namespace BikeDataProject.FileUpload.Controllers
         [HttpPost("/Upload")]
         public IActionResult ValidateFile()
         {
-            var request = Request;
+            var discardedFilesCount = 0;
             try
             {
                 // To receive file
@@ -60,6 +60,7 @@ namespace BikeDataProject.FileUpload.Controllers
                     if (file.Length == 0)
                     {
                         Log.Error("File is empty");
+                        discardedFilesCount++;
                         continue;
                     }
 
@@ -67,6 +68,7 @@ namespace BikeDataProject.FileUpload.Controllers
                     if (file.Length >= this.ConfigurationDetails.SizeLimit)
                     {
                         Log.Error("File too big");
+                        discardedFilesCount++;
                         continue;
                     }
 
@@ -75,6 +77,7 @@ namespace BikeDataProject.FileUpload.Controllers
                     if (!this.ConfigurationDetails.Extensions.Contains(extension.ToUpper()))
                     {
                         Log.Error("File extension is invalid");
+                        discardedFilesCount++;
                         continue;
                     }
 
@@ -94,7 +97,12 @@ namespace BikeDataProject.FileUpload.Controllers
                     }
                 }
 
-                return this.Ok(JsonConvert.SerializeObject(new { status = "OK", message = "Files uploaded"}));
+                return this.Ok(JsonConvert.SerializeObject(new
+                {
+                    fileUploadedCount = (Request.Form.Files.Count() - discardedFilesCount),
+                    fileDiscardedCount = discardedFilesCount,
+                    message = $"{(Request.Form.Files.Count() - discardedFilesCount)} files have been uploaded, {discardedFilesCount} files have been discarded"
+                }));
 
             }
             catch (Exception e)
